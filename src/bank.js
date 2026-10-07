@@ -4,6 +4,14 @@
 
 var OO_BANK = {
 
+  /* ---------- PRACTICE: the one question a first-time Solo player sees. It never counts.
+     Same shape as a News Desk round, so its answer is computed from `shift` too. ---------- */
+  practice: { id: "practice", level: "easy", ticker: "TEE", market: "Team T-shirts", price: 20, per: "shirt",
+    headline: "The school team makes the state finals, and every fan wants a team T-shirt",
+    shift: { c: "D", d: 1 }, shifter: "Tastes and preferences",
+    why: "Fans want the shirt more than before, so this is a demand story. Demand shifts right. Price and quantity both rise.",
+    hint: "Who changed here: the fans who buy shirts, or the store that sells them?" },
+
   /* ---------- NEWS DESK: one curve shifts ----------
      shift.c: "D" or "S"; shift.d: +1 (right/increase) or -1 (left/decrease) */
   news: [
@@ -178,7 +186,7 @@ var OO_BANK = {
       headline: "A recession hits. Factories sit idle and millions of workers lose their jobs.",
       prompt: "Where is the economy now?",
       options: ["Point 1", "Point 2", "Point 3", "Point 4"], answer: 3,
-      why: "Point 3 is inside the curve. Workers and factories are sitting unused, so the economy makes less than it could. Inside the curve means unemployed resources. That is inefficient.",
+      why: "Point 3 is inside the curve. Workers and factories are sitting unused, so the economy makes less than it could. Inside the curve means unemployed resources. That is inefficient. Points 1 and 2 are on the curve, where every resource is in use. Point 4 is outside the curve, so the economy cannot reach it yet.",
       hint: "Unused workers means the economy makes less than it could." },
 
     { id: "outside", visual: "ppc-points",
@@ -240,7 +248,7 @@ var OO_BANK = {
      Each set has a "who makes what" round and a "set the price" round with the same two countries. */
   tradeSets: [
     { id: "setA", kind: "output",
-      countries: ["Atlantis", "Avalon"], goods: ["Phones", "Bikes"], unitNote: "Output of one worker in one day",
+      countries: ["Atlantis", "Avalon"], goods: ["Phones", "Bikes"], unitNote: "Read it like this: one Atlantis worker can make 15 phones OR 5 bikes in a day.",
       units: [["phone", "phones"], ["bike", "bikes"]],
       data: [[15, 5], [4, 4]],
       specialize: {
@@ -261,7 +269,7 @@ var OO_BANK = {
         hint: "Find what a bike costs EACH country to make. The deal must land between those two numbers." }
     },
     { id: "setB", kind: "output",
-      countries: ["Coralia", "Pinewood"], goods: ["Fish (tons)", "Rice (tons)"], unitNote: "What each country makes in a year using all its resources",
+      countries: ["Coralia", "Pinewood"], goods: ["Fish (tons)", "Rice (tons)"], unitNote: "Read it like this: Coralia can make 60 tons of fish OR 30 tons of rice in a year.",
       units: [["ton of fish", "tons of fish"], ["ton of rice", "tons of rice"]],
       data: [[60, 30], [20, 20]],
       specialize: {
@@ -286,7 +294,7 @@ var OO_BANK = {
   /* Input problems: numbers are HOURS to make ONE unit (smaller is better). */
   tradeInput: [
     { id: "upland", kind: "input",
-      countries: ["Upland", "Lowland"], goods: ["Sweaters", "Boots (pairs)"], unitNote: "Hours needed to make ONE",
+      countries: ["Upland", "Lowland"], goods: ["Sweaters", "Boots (pairs)"], unitNote: "Read it like this: Upland needs 2 hours to make one sweater.",
       units: [["sweater", "sweaters"], ["pair of boots", "pairs of boots"]],
       data: [[2, 4], [6, 8]],
       headline: "Upland and Lowland can trade sweaters and boots.",
@@ -296,7 +304,7 @@ var OO_BANK = {
       hint: "How many sweaters could each country make in the time it takes to make one pair of boots?" },
 
     { id: "redport", kind: "input",
-      countries: ["Redport", "Bluebay"], goods: ["Chairs", "Tables"], unitNote: "Hours needed to make ONE",
+      countries: ["Redport", "Bluebay"], goods: ["Chairs", "Tables"], unitNote: "Read it like this: Redport needs 3 hours to make one chair.",
       units: [["chair", "chairs"], ["table", "tables"]],
       data: [[3, 6], [2, 8]],
       headline: "Redport and Bluebay can trade chairs and tables.",
@@ -342,13 +350,5 @@ var OO_BANK = {
       options: ["A surplus, so the price falls", "A shortage, so the price rises", "A surplus, so the price rises", "A shortage, so the price falls"], answer: 1,
       why: "At $80, sellers offer 800 jerseys but fans want only 400. That is a surplus of 400. Sellers cut the price to sell the extra jerseys, so the price falls toward $60.",
       hint: "Extra jerseys on the shelf. What do sellers do?" }
-  ],
-
-  /* ---------- MARKET EVENTS ---------- */
-  events: {
-    bull:     { name: "Bull market",    text: "Right calls pay double this round." },
-    risky:    { name: "Risky business", text: "Wins and losses are both doubled this round." },
-    insider:  { name: "Insider tip",    text: "One wrong answer is crossed out for everyone." },
-    underdog: { name: "Underdog rally", text: "If the last-place team makes the right call, it wins triple." }
-  }
+  ]
 };
