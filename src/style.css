@@ -348,7 +348,7 @@ button.tile:disabled { opacity: 1; cursor: default; }
 
 .options { margin: 0; padding: 0; list-style: none; display: grid; gap: .5rem; }
 .opt {
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .8rem;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .15rem .8rem;
   padding: .5rem .75rem .5rem .5rem; background: var(--paper); border: 2px solid var(--rule); border-radius: 3px;
   transition: opacity .3s, border-color .3s, padding .3s;
 }
@@ -368,7 +368,14 @@ button.tile:disabled { opacity: 1; cursor: default; }
 }
 .stamp { display: inline-flex; align-items: center; gap: .3rem; font-family: var(--font-mono); font-weight: 700; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gain); white-space: nowrap; }
 .stamp.miss { color: var(--loss); }
-.callcard.revealed .opt.wrong { opacity: .5; padding-block: .28rem; }
+.callcard.revealed .opt.wrong { padding-block: .28rem; }
+/* Wrong answers fade, but the line saying why stays easy to read. */
+.callcard.revealed .opt.wrong:not(.chosen) > .num, .callcard.revealed .opt.wrong:not(.chosen) > .txt { opacity: .5; }
+.opt .because { grid-column: 2 / -1; font-size: .95rem; font-weight: 500; line-height: 1.25; color: var(--ink); animation: rise .45s ease both .3s; }
+.opt:has(.because) > .num { grid-row: 1 / span 2; }
+.opt .because b { font-weight: 800; }
+.opt.right .because b { color: var(--gain); }
+.opt.wrong .because b { color: var(--loss); }
 .callcard.revealed .opt.wrong .num { width: 2.1rem; height: 2.1rem; font-size: 1.4rem; }
 .callcard.revealed .opt.wrong .txt { font-size: 1rem; }
 .callcard.revealed .opt.wrong .pq .v { font-size: 1.05rem; }
@@ -377,6 +384,8 @@ button.tile:disabled { opacity: 1; cursor: default; }
 .options.graphs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .options.graphs .opt { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
 .options.graphs .opt .side { grid-column: 1 / -1; justify-content: flex-start; }
+.options.graphs .opt .because { grid-column: 1 / -1; }
+.options.graphs .opt:has(.because) > .num { grid-row: auto; }
 .options.graphs .txt { display: grid; gap: .25rem; font-size: 1rem; }
 .options.graphs .txt svg { width: 100%; height: auto; max-height: 8.5rem; }
 .callcard.revealed .options.graphs .opt.wrong .txt { font-size: .9rem; }
@@ -391,7 +400,6 @@ button.tile:disabled { opacity: 1; cursor: default; }
 .options.pickable .opt.chosen { border-color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
 .options.pickable .opt.chosen .num { background: var(--brass); color: var(--paper); }
 .options.pickable .opt:disabled { cursor: default; opacity: 1; }
-.callcard.revealed .options.pickable .opt.wrong { opacity: .5; }
 .callcard.revealed .options.pickable .opt.wrong.chosen { opacity: 1; box-shadow: none; border-color: var(--loss); background: linear-gradient(var(--loss-wash), var(--loss-wash)), var(--paper); }
 .callcard.revealed .options.pickable .opt.wrong.chosen .num { background: var(--loss); }
 .callcard.revealed .options.pickable .opt.right { box-shadow: none; }
@@ -718,7 +726,7 @@ svg.anim .late { opacity: 0; animation: fadein .4s ease forwards .95s; }
   .options.graphs { grid-template-columns: minmax(0, 1fr); }
   .choices { grid-template-columns: minmax(0, 1fr); }
   .flash-answer { grid-template-columns: minmax(0, 1fr); }
-  .opt { gap: .6rem; }
+  .opt { gap: .15rem .6rem; }
   .opt .txt { font-size: 1.12rem; }
   .pq { gap: .3rem; margin-right: .55rem; }
   .pq .k { font-size: .8rem; letter-spacing: .03em; }

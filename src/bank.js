@@ -186,6 +186,7 @@ var OO_BANK = {
       headline: "A recession hits. Factories sit idle and millions of workers lose their jobs.",
       prompt: "Where is the economy now?",
       options: ["Point 1", "Point 2", "Point 3", "Point 4"], answer: 3,
+      whyEach: ["On the curve, every worker and factory is in use.", "Also on the curve, where nothing sits idle.", "Inside the curve: idle workers and factories.", "Outside the curve: out of reach with what it has."],
       why: "Point 3 is inside the curve. Workers and factories are sitting unused, so the economy makes less than it could. Inside the curve means unemployed resources. That is inefficient. Points 1 and 2 are on the curve, where every resource is in use. Point 4 is outside the curve, so the economy cannot reach it yet.",
       hint: "Unused workers means the economy makes less than it could." },
 
@@ -193,6 +194,7 @@ var OO_BANK = {
       headline: "The country's leaders want to produce at Point 4.",
       prompt: "What would let the country produce at Point 4?",
       options: ["Make fewer cars and more wheat", "Put unemployed workers back to work", "Nothing. Point 4 can never be reached.", "More resources or better technology"], answer: 4,
+      whyEach: ["That moves along the curve. Point 4 stays outside.", "That moves up to the curve, not past it.", "Growth can shift the curve out to Point 4.", "Growth shifts the whole curve out to Point 4."],
       why: "Point 4 is outside the curve, so it is unattainable today. Economic growth (more resources, more capital, better technology) shifts the whole curve out until Point 4 is on it. Hiring unemployed workers only moves the economy from inside the curve up to the curve.",
       hint: "Moving to the curve is not the same as moving the curve." },
 
@@ -201,6 +203,7 @@ var OO_BANK = {
       prompt: "Which graph shows the new PPC?",
       options: ["Only the car end moves out", "Only the wheat end moves out", "Both ends move out", "The whole curve moves in"],
       graphs: ["pivotX", "pivotY", "out", "in"], answer: 1,
+      whyEach: ["Only car making got better, so only the car end moves.", "Wheat farming didn't change. The robot builds cars.", "Both ends move only if both goods get better.", "The curve moves in when resources are lost, not gained."],
       why: "Only car making got better. If the country makes all cars, it can now make more than before, so the car end moves out. If it makes all wheat, nothing changed, so the wheat end stays put.",
       hint: "Which good got the new technology?" },
 
@@ -210,6 +213,7 @@ var OO_BANK = {
       table: { labels: ["A", "B", "C", "D", "E"], wheat: [0, 10, 20, 30, 40], cars: [100, 90, 70, 40, 0] },
       from: 2, to: 3,
       options: ["10 cars", "20 cars", "30 cars", "40 cars"], answer: 3,
+      whyEach: ["10 cars is the cost from A to B (100 to 90).", "20 cars is the cost from B to C (90 to 70).", "C to D: 70 cars down to 40, so 30 cars.", "40 cars is the cost from D to E (40 to 0)."],
       why: "At C the country makes 70 cars. At D it makes 40 cars. It gives up 30 cars to get 10 more tons of wheat. Each extra 10 tons costs more cars than the last (10, then 20, then 30, then 40). That is increasing opportunity cost, and it is why the PPC bows out.",
       hint: "Only look at the CARS column for C and D." },
 
@@ -217,6 +221,7 @@ var OO_BANK = {
       headline: "Bakeville's PPC for bread and cake is a straight line.",
       prompt: "What does the straight line tell you?",
       options: ["Opportunity cost stays the same", "Opportunity cost keeps rising", "There is no opportunity cost", "The economy is wasting resources"], answer: 1,
+      whyEach: ["Same slope everywhere means the same cost each time.", "Rising cost makes a PPC bow out, not a straight line.", "More cake still means less bread. That is a cost.", "Waste is a point inside the PPC, not the line's shape."],
       why: "A straight line has the same slope everywhere, so each extra cake always costs the same amount of bread. That happens when resources are equally good at making both goods. A curve that bows out means rising opportunity cost.",
       hint: "Think about the slope." },
 
@@ -224,6 +229,7 @@ var OO_BANK = {
       headline: "Two countries start with the same PPC. Alpha puts more into capital goods (factories, machines, tools). Beta puts more into consumer goods (food, clothes, phones).",
       prompt: "Whose PPC will probably grow more in the future?",
       options: ["They will grow the same", "Alpha", "Beta", "Neither PPC can grow"], answer: 2,
+      whyEach: ["Same start, but Alpha builds more tools to make more.", "Capital goods help make more later, so Alpha grows more.", "Consumer goods are enjoyed now. They don't build more.", "New capital is more resources, so the PPC can grow."],
       why: "Capital goods are tools used to make other goods. More capital today means more production tomorrow, so Alpha's PPC should shift out farther. Beta enjoys more goods now but grows less later.",
       hint: "Which goods help you make MORE goods later?" },
 
@@ -232,6 +238,7 @@ var OO_BANK = {
       prompt: "What is your opportunity cost?",
       choices: ["Basketball", "Studying", "Sleep"], picked: 0, nextBest: 1,
       options: ["Nothing. It was free time.", "The hour of basketball", "Studying AND sleeping", "The hour of studying"], answer: 4,
+      whyEach: ["Free time still costs something: the studying you gave up.", "Basketball is what you chose, not what you gave up.", "You give up only your next best choice, not both.", "Studying was your next best choice, so it is the cost."],
       why: "Opportunity cost is the value of your next best alternative, the best thing you gave up. You can only use the hour once, so your opportunity cost is studying, not studying plus sleeping.",
       hint: "Opportunity cost is ONE thing: the next best choice." },
 
@@ -239,6 +246,7 @@ var OO_BANK = {
       headline: "After trading with another country, Avalon's people have the goods shown at the star, outside Avalon's own PPC.",
       prompt: "How is that possible?",
       options: ["It isn't. Points outside the PPC are impossible.", "Avalon put unemployed workers back to work.", "Avalon specialized and traded.", "Avalon made fewer bikes and more phones."], answer: 3,
+      whyEach: ["Producing there is impossible. Consuming there is not.", "That moves Avalon up to its PPC, never past it.", "Specializing and trading lets Avalon consume past its PPC.", "That moves Avalon along its own PPC, not outside it."],
       why: "A country cannot PRODUCE outside its PPC on its own. But when it specializes in the good it makes at a lower opportunity cost than its partner (its comparative advantage) and trades, it can CONSUME outside its PPC. That extra is the gain from trade.",
       hint: "Producing and consuming are not the same thing." }
   ],
@@ -256,6 +264,7 @@ var OO_BANK = {
         headline: "Atlantis and Avalon want to trade phones and bikes.",
         prompt: "Who should make what?",
         options: ["Atlantis makes both. It is better at everything.", "Atlantis makes bikes. Avalon makes phones.", "Atlantis makes phones. Avalon makes bikes.", "No trade. Avalon has nothing to offer."], answer: 3,
+        whyEach: ["Better at both is absolute advantage, not comparative.", "Backwards: a bike costs Atlantis 3 phones, Avalon only 1.", "A phone costs Atlantis 1/3 bike. A bike costs Avalon 1 phone.", "Avalon makes bikes for less (1 phone vs. 3). Both gain."],
         why: "Atlantis makes more of both goods (absolute advantage), but trade follows opportunity cost. A phone costs Atlantis only 1/3 of a bike (5 ÷ 15) but costs Avalon 1 bike (4 ÷ 4), so Atlantis makes phones. A bike costs Avalon 1 phone but costs Atlantis 3 phones (15 ÷ 5), so Avalon makes bikes.",
         hint: "Being better at both is absolute advantage. Trade follows what each country GIVES UP." },
       terms: {
@@ -265,6 +274,7 @@ var OO_BANK = {
         options: ["1 bike for ½ phone", "1 bike for 2 phones", "1 bike for 3 phones", "1 bike for 4 phones"],
         values: [0.5, 2, 3, 4], answer: 2,
         zone: { low: 1, lowWho: "Avalon", high: 3, highWho: "Atlantis", unit: "phones per bike", max: 5 },
+        whyEach: ["A bike costs Avalon 1 phone. Avalon would lose.", "2 is between Avalon's cost (1) and Atlantis's cost (3).", "A bike costs Atlantis 3 phones itself. It gains nothing.", "Atlantis can make a bike for 3 phones. It won't pay 4."],
         why: "Making a bike costs Avalon 1 phone, so Avalon needs MORE than 1 phone per bike. Making a bike costs Atlantis 3 phones, so Atlantis will pay LESS than 3. Any price between 1 and 3 phones helps both, so 2 phones works. At exactly 3, Atlantis gains nothing.",
         hint: "Find what a bike costs EACH country to make. The deal must land between those two numbers." }
     },
@@ -277,6 +287,7 @@ var OO_BANK = {
         headline: "Coralia and Pinewood want to trade fish and rice.",
         prompt: "Who has the comparative advantage in RICE?",
         options: ["Pinewood, because 1 ton of rice costs it only 1 ton of fish", "Coralia, because it grows more rice (30 vs. 20)", "Coralia, because 1 ton of rice costs it only ½ ton of fish", "Neither. Coralia is better at both."], answer: 1,
+        whyEach: ["Rice costs Pinewood 1 ton of fish, Coralia 2 tons.", "Growing more is absolute advantage, not comparative.", "½ ton of rice is what a ton of fish costs Coralia.", "Pinewood still gives up less fish per ton of rice."],
         why: "Coralia makes more of both (absolute advantage), but that is not the test. For 1 ton of rice, Coralia gives up 2 tons of fish (60 ÷ 30). Pinewood gives up only 1 ton of fish (20 ÷ 20). Lower opportunity cost means Pinewood has the comparative advantage in rice.",
         hint: "Comparative advantage = the LOWER opportunity cost." },
       terms: {
@@ -286,6 +297,7 @@ var OO_BANK = {
         options: ["1 ton of rice for ½ ton of fish", "1 ton of rice for 1 ton of fish", "1 ton of rice for 1½ tons of fish", "1 ton of rice for 3 tons of fish"],
         values: [0.5, 1, 1.5, 3], answer: 3,
         zone: { low: 1, lowWho: "Pinewood", high: 2, highWho: "Coralia", unit: "tons of fish per ton of rice", max: 3.5 },
+        whyEach: ["Rice costs Pinewood 1 ton of fish. Pinewood would lose.", "That is Pinewood's own cost. Pinewood gains nothing.", "1½ is between Pinewood's cost (1) and Coralia's (2).", "Coralia can grow rice for 2 tons of fish. It won't pay 3."],
         why: "Rice costs Pinewood 1 ton of fish to grow, so Pinewood needs MORE than 1 ton of fish per ton of rice. Rice costs Coralia 2 tons of fish, so Coralia will pay LESS than 2. Only 1½ tons falls between 1 and 2. At exactly 1, Pinewood gains nothing.",
         hint: "Find what a ton of rice costs EACH country. The deal must land between those two numbers." }
     }
@@ -300,6 +312,7 @@ var OO_BANK = {
       headline: "Upland and Lowland can trade sweaters and boots.",
       prompt: "Who should specialize in BOOTS?",
       options: ["Upland, because it makes boots in less time (4 hours vs. 8)", "Neither. Upland is faster at both goods, so there is no gain from trade.", "Upland, because a pair of boots costs it only ½ sweater", "Lowland, because a pair of boots costs it only 1⅓ sweaters"], answer: 4,
+      whyEach: ["Less time is absolute advantage, not comparative.", "Lowland gives up fewer sweaters per pair. Both gain.", "½ is what a sweater costs Upland. Boots cost it 2 sweaters.", "Boots cost Lowland 1 1/3 sweaters, Upland 2."],
       why: "With hours, smaller is better, so Upland is faster at both goods (absolute advantage). For opportunity cost, ask: in the time it takes to make one pair of boots, how many sweaters could you make? Upland: 4 ÷ 2 = 2 sweaters. Lowland: 8 ÷ 6 = 1⅓ sweaters. Lowland gives up less, so Lowland has the comparative advantage in boots.",
       hint: "How many sweaters could each country make in the time it takes to make one pair of boots?" },
 
@@ -310,6 +323,7 @@ var OO_BANK = {
       headline: "Redport and Bluebay can trade chairs and tables.",
       prompt: "Who should make what?",
       options: ["Redport makes tables. Bluebay makes chairs.", "Bluebay makes tables. Redport makes chairs.", "Bluebay makes both. It is faster at chairs.", "No trade. Each is faster at one good."], answer: 1,
+      whyEach: ["A table costs Redport 2 chairs, Bluebay 4.", "Backwards: a table costs Bluebay 4 chairs, Redport 2.", "Bluebay is slower at tables (8 hours vs. 6).", "Each faster at one good is a reason to trade."],
       why: "In the 6 hours Redport needs for a table, it could make 2 chairs. In the 8 hours Bluebay needs for a table, it could make 4 chairs. A table costs Redport less, so Redport makes tables. A chair costs Bluebay only ¼ of a table (2 ÷ 8) and costs Redport ½ of a table (3 ÷ 6), so Bluebay makes chairs.",
       hint: "In the time it takes to make one table, how many chairs could each country make?" }
   ],
@@ -327,6 +341,7 @@ var OO_BANK = {
       headline: "The team store prices jerseys at $40.",
       prompt: "What happens at $40?",
       options: ["A surplus of 400 jerseys", "A shortage of 400 jerseys", "A shortage of 800 jerseys", "Nothing. The market clears."], answer: 2,
+      whyEach: ["Fans want more (800) than is for sale (400): a shortage.", "800 wanted − 400 for sale = a shortage of 400.", "800 is how many fans want. The gap is 400.", "The market clears only at $60, where both are 600."],
       why: "At $40, fans want 800 jerseys but sellers offer only 400. Quantity demanded is greater than quantity supplied, so there is a shortage of 800 − 400 = 400 jerseys. The price is below equilibrium ($60), so it tends to rise.",
       hint: "Compare quantity demanded and quantity supplied in the $40 row." },
 
@@ -334,6 +349,7 @@ var OO_BANK = {
       headline: "The team store prices jerseys at $100.",
       prompt: "What happens at $100?",
       options: ["A surplus of 1,000 jerseys", "A shortage of 800 jerseys", "A surplus of 200 jerseys", "A surplus of 800 jerseys"], answer: 4,
+      whyEach: ["1,000 is how many are for sale. The gap is 800.", "More for sale (1,000) than wanted (200): a surplus.", "200 is how many fans want. The gap is 800.", "1,000 for sale − 200 wanted = a surplus of 800."],
       why: "At $100, sellers offer 1,000 jerseys but fans want only 200. Quantity supplied is greater than quantity demanded, so there is a surplus of 1,000 − 200 = 800 jerseys. The price is above equilibrium ($60), so it tends to fall.",
       hint: "Surplus or shortage = the gap between the two quantities." },
 
@@ -341,6 +357,7 @@ var OO_BANK = {
       headline: "The student council sets the price at $4 a slice.",
       prompt: "What happens at $4?",
       options: ["A shortage of 200 slices", "Equilibrium. 300 slices sell.", "A surplus of 200 slices", "A surplus of 400 slices"], answer: 3,
+      whyEach: ["More for sale (400) than wanted (200): a surplus.", "Equilibrium is $3, where both are 300.", "400 for sale − 200 wanted = a surplus of 200.", "400 is how many are for sale. The gap is 200."],
       why: "At $4, 400 slices are offered but students want only 200. Quantity supplied is greater than quantity demanded, so there is a surplus of 400 − 200 = 200 slices. The price is above equilibrium ($3), so it tends to fall.",
       hint: "Find the $4 row. Which quantity is bigger?" },
 
@@ -348,6 +365,7 @@ var OO_BANK = {
       headline: "The team store prices jerseys at $80.",
       prompt: "What happens next?",
       options: ["A surplus, so the price falls", "A shortage, so the price rises", "A surplus, so the price rises", "A shortage, so the price falls"], answer: 1,
+      whyEach: ["800 for sale, 400 wanted. Sellers cut the price.", "800 for sale but only 400 wanted is a surplus.", "With extra jerseys, sellers cut the price, not raise it.", "It is a surplus, and a shortage would raise the price."],
       why: "At $80, sellers offer 800 jerseys but fans want only 400. That is a surplus of 400. Sellers cut the price to sell the extra jerseys, so the price falls toward $60.",
       hint: "Extra jerseys on the shelf. What do sellers do?" }
   ]

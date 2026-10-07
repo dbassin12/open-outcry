@@ -399,6 +399,9 @@ def solo_question(page, tag, k, right=True, bet_k=None, shots=None, name=None, k
     if ('win' if right else 'lose') not in flashed:
         problems.append(f'{tag} {name or k}: the bottom line does not say right or wrong')
     check(page, f'{tag} {name or k} revealed')
+    because = page.evaluate('() => [...document.querySelectorAll("#stage .opt .because")].map(e => e.textContent)')
+    if len(because) != 4 or sum(x.startswith('Right.') for x in because) != 1:
+        problems.append(f'{tag} {name or k}: the reveal should give a reason under each of the 4 answers, one of them Right (got {len(because)})')
     if shots: shot(page, shots / f'{name}-c-revealed.png')
     return right
 

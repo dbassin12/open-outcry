@@ -842,7 +842,7 @@
     return r.options.map(esc);
   }
   function optionsHTML(r, phase, v) {
-    const revealed = phase === 'revealed', klass = v.kind === 'class';
+    const revealed = phase === 'revealed', klass = v.kind === 'class', reasons = revealed && !klass ? reasonsFor(r) : null;   /* Class: the teacher explains, and the projector view stays short */
     const long = !!(r.options && r.options.some((o) => o.length > 46));
     const cls = (long ? ' long' : '') + (r.visual === 'ppc-choice' ? ' graphs' : '') + (klass ? '' : ' pickable');
     return `<ol class="options${cls}">` + optionItems(r).map((txt, k) => {
@@ -851,7 +851,8 @@
       if (right) side = `<span class="stamp">${icon('check')}${mine ? 'You got it' : 'Right answer'}</span>`;
       else if (revealed && mine) side = `<span class="stamp miss">${icon('x')}Your answer</span>`;
       const cl = `opt${right ? ' right' : ''}${revealed && !right ? ' wrong' : ''}${mine ? ' chosen' : ''}`;
-      const inner = `<span class="num" aria-hidden="true">${n}</span><span class="txt">${txt}</span><span class="side">${side}</span>`;
+      const because = reasons ? `<span class="because"><b>${n === r.answer ? 'Right.' : 'Wrong.'}</b> ${esc(reasons[k])}</span>` : '';
+      const inner = `<span class="num" aria-hidden="true">${n}</span><span class="txt">${txt}</span><span class="side">${side}</span>${because}`;
       if (klass) return `<li class="${cl}">${inner}</li>`;
       return `<li><button type="button" class="${cl}" data-act="answer" data-n="${n}" aria-pressed="${mine}"${revealed ? ' disabled' : ''}>${inner}</button></li>`;
     }).join('') + '</ol>';
@@ -880,7 +881,38 @@
     c.classList.toggle('paused', !timer.running);
   }
   function shiftWords(s) { return (s.c === 'D' ? 'Demand ' : 'Supply ') + (s.d > 0 ? 'increases (shifts right)' : 'decreases (shifts left)'); }
-  function whyHTML(r) {
+  /* After the reveal, one line under each answer says why it is right or wrong. Curve-shift rounds are computed from
+     the shifts (like their answers): each option is what exactly one shift, or one pair of shifts, would do. Other rounds use whyEach in bank.js. */
+  const SINGLE_CAUSE = [{ c: 'D', d: 1 }, { c: 'D', d: -1 }, { c: 'S', d: -1 }, { c: 'S', d: 1 }];
+  const DOUBLE_CAUSE = [[1, -1], [-1, 1], [1, 1], [-1, -1]];   /* [demand, supply] */
+  const pqMove = (o) => (o.p === o.q ? `price and quantity both ${o.p > 0 ? 'rise' : 'fall'}` : `price ${o.p > 0 ? 'rises' : 'falls'} and quantity ${o.q > 0 ? 'rises' : 'falls'}`);
+  const upFirst = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  /* Short on purpose (about 60 characters): one line under each answer on a laptop. The explanation below says the rest. */
+  function reasonsFor(r) {
+    const cw = (c) => (c === 'D' ? 'demand' : 'supply'), lr = (d) => (d > 0 ? 'right' : 'left');
+    if (r.desk === 'news') {
+      const s = r.shift;
+      return SINGLE_CAUSE.map((o, k) => {
+        if (k + 1 === r.answer) return `${upFirst(cw(s.c))} shifts ${lr(s.d)}: ${pqMove(SINGLE[k])}.`;
+        if (o.c === s.c) return `That needs ${cw(o.c)} to shift ${lr(o.d)}, not ${lr(s.d)}.`;
+        if (o.d === s.d) return `That needs ${cw(o.c)} to shift ${lr(o.d)}, not ${cw(s.c)}.`;
+        return `That needs ${cw(o.c)} to shift ${lr(o.d)}. Here ${cw(s.c)} shifts ${lr(s.d)}.`;
+      });
+    }
+    if (r.desk === 'double') {
+      const d = r.shifts.find((x) => x.c === 'D').d, sd = r.shifts.find((x) => x.c === 'S').d;
+      const ud = (v) => (v > 0 ? 'up' : 'down'), rf = (v) => (v > 0 ? 'rise' : 'fall');
+      return DOUBLE_CAUSE.map(([a, b], k) => {
+        const o = DOUBLE[k];
+        if (k + 1 === r.answer) return `Both shifts push ${o.p ? 'price' : 'quantity'} ${ud(o.p || o.q)}. ${o.p ? 'Quantity' : 'Price'} is pushed both ways.`;
+        if (a !== d && b !== sd) return `That needs demand ${ud(a)} and supply ${ud(b)}. Here it's the reverse.`;
+        return a !== d ? `That needs demand to ${rf(a)}. Here demand ${rf(d)}s.` : `That needs supply to ${rf(b)}. Here supply ${rf(sd)}s.`;
+      });
+    }
+    return r.whyEach && r.whyEach.length === 4 ? r.whyEach : null;
+  }
+  /* short: Solo and Review, where the line under the right answer already says what the verdict would. */
+  function whyHTML(r, short) {
     let verdict, extra = '';
     if (r.desk === 'news') {
       verdict = shiftWords(r.shift);
@@ -892,7 +924,7 @@
       const txt = r.options[r.answer - 1];
       verdict = txt.length <= 34 ? `The answer: ${txt}` : `The answer is choice ${r.answer}`;
     }
-    return `<div class="why"><p class="verdict">${esc(verdict)}</p><p>${esc(r.why)}</p>${extra}</div>`;
+    return `<div class="why">${short && reasonsFor(r) ? '' : `<p class="verdict">${esc(verdict)}</p>`}<p>${esc(r.why)}</p>${extra}</div>`;
   }
   /* Double shift, after the answer: both possible cases side by side, so the picture itself shows why one of price or quantity can't be told. */
   function twoCasesHTML(r) {
@@ -1016,7 +1048,7 @@
       if (phase === 'hands') call += `<div class="handsup" role="status"><b>Hands up!</b><span>Each team shows its answer: 1 to 4 fingers.</span></div>`;
       call += revealed ? whyHTML(r) : hint;
     } else {
-      call = `<p class="prompt">${esc(promptFor(r))}</p>${optionsHTML(r, phase, v)}${v.kind === 'practice' ? coachHTML(phase) : ''}${v.kind === 'solo' && seg.final && phase === 'bet' ? allInHTML(seg) : ''}${revealed && v.kind === 'solo' ? bailNote() : ''}${revealed ? whyHTML(r) : hint}`;
+      call = `<p class="prompt">${esc(promptFor(r))}</p>${optionsHTML(r, phase, v)}${v.kind === 'practice' ? coachHTML(phase) : ''}${v.kind === 'solo' && seg.final && phase === 'bet' ? allInHTML(seg) : ''}${revealed && v.kind === 'solo' ? bailNote() : ''}${revealed ? whyHTML(r, true) : hint}`;
     }
     return `<section class="round desk-${r.desk}${wide ? ' wide' : ''}${klass ? ' class' : ' solo'}">
       <div class="ticket">${topRowHTML(seg, r, v.kind)}${ticketBody(r, seg, revealed)}</div>
@@ -1874,6 +1906,8 @@
     B.economy.concat(B.inventory, B.tradeInput).forEach((x) => { if (!(x.answer >= 1 && x.answer <= 4) || x.options.length !== 4) bad.push(x.id); });
     B.tradeSets.forEach((s) => ['specialize', 'terms'].forEach((p) => { const q = s[p]; if (!(q.answer >= 1 && q.answer <= 4) || q.options.length !== 4) bad.push(q.id); }));
     if (!B.practice || !B.practice.shift) bad.push('practice');
+    B.economy.concat(B.inventory, B.tradeInput).forEach((x) => { if (!x.whyEach || x.whyEach.length !== 4) bad.push(x.id + ' whyEach'); });
+    B.tradeSets.forEach((st) => ['specialize', 'terms'].forEach((q) => { if (!st[q].whyEach || st[q].whyEach.length !== 4) bad.push(st[q].id + ' whyEach'); }));
     if (bad.length) console.warn('Open Outcry: check these rounds', bad);
   }
   function start(data) {
